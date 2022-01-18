@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './questions.dart';
-import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   var status = true;
 
-  final questions = const [
+  final _questions = const [
     {
       'question': 'Is dart fun?',
       'answer': [
@@ -45,12 +45,12 @@ class MyAppState extends State<MyApp> {
     },
   ];
 
-  var questionIndex = 0;
+  var _questionIndex = 0;
 
   void _answerQuestion() {
-    if (questionIndex < questions.length) {
+    if (_questionIndex < _questions.length) {
       setState(() {
-        questionIndex = questionIndex + 1;
+        _questionIndex = _questionIndex + 1;
       });
     }
   }
@@ -62,14 +62,13 @@ class MyAppState extends State<MyApp> {
       appBar: AppBar(
         title: Text('Flutter Project'),
       ),
-      body: Column(
-        children: [
-          Question(questions[questionIndex]['question']),
-          ...(questions[questionIndex]['answer'] as List<String>).map((item) {
-            return Answer(_answerQuestion, item);
-          }).toList()
-        ],
-      ),
+      body: _questionIndex < _questions.length
+          ? Quiz(
+              answerQuestion: _answerQuestion,
+              questionIndex: _questionIndex,
+              questions: _questions,
+            )
+          : Result(),
     ));
   }
 }
