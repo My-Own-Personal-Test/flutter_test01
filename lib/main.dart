@@ -13,46 +13,50 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  var status = true;
+
+  final questions = const [
+    {
+      'question': 'Is dart fun?',
+      'answer': [
+        'Yes!',
+        'Meehh...',
+        'I\'m gonna think about it again',
+        'Hell No!',
+      ]
+    },
+    {
+      'question': 'Is dart dificult to learn?',
+      'answer': [
+        'Yes!',
+        'Meehh...',
+        'Not really, i think',
+        'Hell No!',
+      ]
+    },
+    {
+      'question': 'Is dart dificult to cool?',
+      'answer': [
+        'Yes!',
+        'Meehh...',
+        'Don\'t know yet',
+        'Hell No!',
+      ]
+    },
+  ];
+
   var questionIndex = 0;
 
   void _answerQuestion() {
-    setState(() {
-      questionIndex = questionIndex + 1;
-    });
+    if (questionIndex < questions.length) {
+      setState(() {
+        questionIndex = questionIndex + 1;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      {
-        'question': 'Is dart fun?',
-        'answer': [
-          'Yes!',
-          'Meehh...',
-          'I\'m gonna think about it again',
-          'Hell No!',
-        ]
-      },
-      {
-        'question': 'Is dart dificult to learn?',
-        'answer': [
-          'Yes!',
-          'Meehh...',
-          'Not really, i think',
-          'Hell No!',
-        ]
-      },
-      {
-        'question': 'Is dart dificult to cool?',
-        'answer': [
-          'Yes!',
-          'Meehh...',
-          'Don\'t know yet',
-          'Hell No!',
-        ]
-      },
-    ];
-
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
@@ -60,7 +64,7 @@ class MyAppState extends State<MyApp> {
       ),
       body: Column(
         children: [
-          Question(questions[questionIndex]['question'] as String),
+          Question(questions[questionIndex]['question']),
           ...(questions[questionIndex]['answer'] as List<String>).map((item) {
             return Answer(_answerQuestion, item);
           }).toList()
